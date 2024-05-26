@@ -7,10 +7,9 @@ import br.com.biscoithor.screenmatch.model.SeriesData;
 import br.com.biscoithor.screenmatch.service.ConsumeApi;
 import br.com.biscoithor.screenmatch.service.DataConverter;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -56,6 +55,25 @@ public class Main {
                 ).collect(Collectors.toList());
         episodes.forEach(System.out::println);
 
-
+//        System.out.println("Filter episodes starting from what year?");
+//        var year = reader.nextInt();
+//        reader.nextLine();
+//
+//        LocalDate searchDate = LocalDate.of(year,1,1);
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+//
+//        episodes.stream()
+//                .filter(e->e.getReleaseDate()!=null && e.getReleaseDate().isAfter(searchDate))
+//                .forEach(e-> System.out.println(
+//                        "Season: " + e.getSeason()
+//                                + " Episode: " + e.getTitle()
+//                                + " Release Date: " + e.getReleaseDate().format(formatter)
+//                ));
+        System.out.println("Insert Episode you wish to know the season for: ");
+        var searchedTitle = reader.nextLine();
+        Optional<Episode> searchedEpisode = episodes.stream()
+                .filter(e-> e.getTitle().toUpperCase().contains(searchedTitle.toUpperCase()))
+                .findFirst();
+        System.out.println("Episode Title: " + searchedEpisode.get().getTitle()+" Season: " + searchedEpisode.get().getSeason());
     }
 }

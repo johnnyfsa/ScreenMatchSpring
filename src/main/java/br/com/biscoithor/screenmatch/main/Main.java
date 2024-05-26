@@ -69,11 +69,22 @@ public class Main {
 //                                + " Episode: " + e.getTitle()
 //                                + " Release Date: " + e.getReleaseDate().format(formatter)
 //                ));
-        System.out.println("Insert Episode you wish to know the season for: ");
-        var searchedTitle = reader.nextLine();
-        Optional<Episode> searchedEpisode = episodes.stream()
-                .filter(e-> e.getTitle().toUpperCase().contains(searchedTitle.toUpperCase()))
-                .findFirst();
-        System.out.println("Episode Title: " + searchedEpisode.get().getTitle()+" Season: " + searchedEpisode.get().getSeason());
+//        System.out.println("Insert Episode you wish to know the season for: ");
+//        var searchedTitle = reader.nextLine();
+//        Optional<Episode> searchedEpisode = episodes.stream()
+//                .filter(e-> e.getTitle().toUpperCase().contains(searchedTitle.toUpperCase()))
+//                .findFirst();
+//        System.out.println("Episode Title: " + searchedEpisode.get().getTitle()+" Season: " + searchedEpisode.get().getSeason());
+        Map<Integer,Double> ratingsBySeason = episodes.stream()
+                .filter(e->e.getImdbRating()>0.0)
+                .collect(Collectors.groupingBy(Episode::getSeason,
+                        Collectors.averagingDouble(Episode::getImdbRating)));
+
+        System.out.println(ratingsBySeason);
+
+        DoubleSummaryStatistics est = episodes.stream()
+                .filter(e->e.getImdbRating()>0.0)
+                .collect(Collectors.summarizingDouble(Episode::getImdbRating));
+        System.out.println(est);
     }
 }

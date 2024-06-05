@@ -86,6 +86,5 @@ public class Main {
                 .filter(e->e.getImdbRating()>0.0)
                 .collect(Collectors.summarizingDouble(Episode::getImdbRating));
         System.out.println(est);
-        System.out.println("teste");
     }
 }
